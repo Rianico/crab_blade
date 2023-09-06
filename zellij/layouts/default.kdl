@@ -3,6 +3,13 @@ layout {
         pane
         pane
     }
+    floating_panes {
+        pane {
+            x "10%"
+            width "81%"
+            height "50%"
+        }
+    }
     pane size=1 borderless=true {
         plugin location="zellij:compact-bar"
     }
