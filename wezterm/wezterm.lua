@@ -1,36 +1,39 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 
--- This table will hold the configuration.
 local config = {}
 
--- In newer versions of wezterm, use the config_builder which will
--- help provide clearer error messages
 if wezterm.config_builder then
-  config = wezterm.config_builder()
-  config.default_domain = 'WSL:Ubuntu-22.04'
+    config = wezterm.config_builder()
+    config.default_domain = 'WSL:Ubuntu-22.04'
 end
 
 -- gpu
 local os_name = string.lower(os.getenv("OS") or "")
-if os_name:match("windows") then
+if string.find(os_name, "windows") ~= nil then
     config.webgpu_power_preference = 'HighPerformance'
-elseif os_name:match("mac") then
+elseif string.find(os_name, "mac") ~= nil then
     config.webgpu_power_preference = 'LowPower'
 end
 
+-- apparance
+-- when start up, we maximize the window
+wezterm.on('gui-startup', function(window)
+    local tab, pane, window = wezterm.mux.spawn_window({})
+    local gui_window = window:gui_window();
+    gui_window:perform_action(wezterm.action.ToggleFullScreen, pane)
+end)
 
 config.color_scheme = 'Hardcore'
 
+config.window_decorations = "RESIZE"
+config.hide_tab_bar_if_only_one_tab = true
+
+-- font
+config.font = wezterm.font 'FiraCode Nerd Font'
+config.font_size = 12.0
+
 -- cursor
 config.default_cursor_style = 'SteadyUnderline'
-
--- This is where you actually apply your config choices
-config.font = wezterm.font 'FiraCode Nerd Font'
-config.font_size = 21.0
-
-config.initial_rows = 47
-config.initial_cols = 199
 
 -- apparance
 config.window_background_opacity = 0.93
@@ -65,7 +68,7 @@ config.window_background_gradient = {
     -- How the colors are blended in the gradient.
     -- "Rgb", "LinearRgb", "Hsv" and "Oklab" are supported.
     -- The default is "Rgb".
-    blend = 'Rgb',
+    blend = 'Oklab',
 
     -- To avoid vertical color banding for horizontal gradients, the
     -- gradient position is randomly shifted by up to the `noise` value
@@ -82,7 +85,7 @@ config.window_background_gradient = {
     -- segment_smoothness is how hard the edge is; 0.0 is a hard edge,
     -- 1.0 is a soft edge.
     segment_size = 6,
-    segment_smoothness = 0.9,
+    segment_smoothness = 1.0,
 }
 
 config.colors = {
@@ -93,11 +96,9 @@ config.colors = {
 }
 
 config.inactive_pane_hsb = {
-    saturation = 0.2,
-    brightness = 0.2,
+    saturation = 0.8,
+    brightness = 0.15,
 }
-
-config.hide_tab_bar_if_only_one_tab = true
 
 -- keybinding
 config.disable_default_key_bindings = false
@@ -107,30 +108,32 @@ local act = wezterm.action
 
 config.keys = {
     -- pane
-    { key = 'v', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
-    { key = 's', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
-    { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true }, },
-    { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState, },
+    { key = 'v', mods = 'LEADER',     action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
+    { key = 's', mods = 'LEADER',     action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+    { key = 'q', mods = 'LEADER',     action = act.CloseCurrentPane { confirm = false }, },
+    { key = 'z', mods = 'LEADER',     action = act.TogglePaneZoomState, },
 
     -- tab
-    { key = 't', mods = 'CMD', action = act.SpawnTab 'CurrentPaneDomain', },
-    { key = 't', mods = 'CTRL', action = act.SpawnTab 'CurrentPaneDomain', },
-    { key = 'w', mods = 'CMD', action = act.CloseCurrentTab { confirm = true }, },
+    -- mac
+    { key = 't', mods = 'CMD',        action = act.SpawnTab 'CurrentPaneDomain', },
+    -- windows
+    { key = 't', mods = 'META',       action = act.SpawnTab 'CurrentPaneDomain', },
+    { key = 'w', mods = 'CMD',        action = act.CloseCurrentTab { confirm = false }, },
 
     -- copy and paste
     -- mac
-    { key = 'c', mods = 'CMD', action = act.CopyTo 'Clipboard', },
-    { key = 'v', mods = 'CMD', action = act.PasteFrom 'Clipboard' },
-    -- window
+    { key = 'c', mods = 'CMD',        action = act.CopyTo 'Clipboard', },
+    { key = 'v', mods = 'CMD',        action = act.PasteFrom 'Clipboard' },
+    -- windows
     { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo 'Clipboard', },
     { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
 
     -- search
-    { key = 'f', mods = 'LEADER', action = act.Search { Regex = '', }, },
+    { key = 'f', mods = 'META',       action = act.Search { Regex = '', }, },
     -- copy mode
-    { key = 'v', mods = 'META', action = act.ActivateCopyMode },
+    { key = 'v', mods = 'META',       action = act.ActivateCopyMode },
     -- quick select mode
-    { key = 's', mods = 'META', action = act.QuickSelect },
+    { key = 's', mods = 'META',       action = act.QuickSelect },
 }
 
 for i = 1, 8 do
@@ -147,10 +150,7 @@ for i = 1, 8 do
 end
 
 config.quick_select_patterns = {
-    -- match things that look like sha1 hashes
-    -- (this is actually one of the default patterns)
     '[0-9a-zA-Z]{3,40}',
 }
 
--- and finally, return the configuration to wezterm
 return config
