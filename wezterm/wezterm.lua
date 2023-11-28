@@ -4,13 +4,12 @@ local config = {}
 
 if wezterm.config_builder then
     config = wezterm.config_builder()
-    config.default_domain = 'WSL:Ubuntu-22.04'
 end
 
--- gpu
 local os_name = string.lower(os.getenv("OS") or "")
 if string.find(os_name, "windows") ~= nil then
     config.webgpu_power_preference = 'HighPerformance'
+    config.default_domain = 'WSL:Ubuntu-22.04'
 elseif string.find(os_name, "mac") ~= nil then
     config.webgpu_power_preference = 'LowPower'
 end
@@ -30,7 +29,7 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- font
 config.font = wezterm.font 'FiraCode Nerd Font'
-config.font_size = 12.0
+config.font_size = 22.0
 
 -- cursor
 config.default_cursor_style = 'SteadyUnderline'
@@ -108,32 +107,32 @@ local act = wezterm.action
 
 config.keys = {
     -- pane
-    { key = 'v', mods = 'LEADER',     action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
-    { key = 's', mods = 'LEADER',     action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
-    { key = 'q', mods = 'LEADER',     action = act.CloseCurrentPane { confirm = false }, },
-    { key = 'z', mods = 'LEADER',     action = act.TogglePaneZoomState, },
+    { key = 'v', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' }, },
+    { key = 's', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' }, },
+    { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane { confirm = false }, },
+    { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState, },
 
     -- tab
     -- mac
-    { key = 't', mods = 'CMD',        action = act.SpawnTab 'CurrentPaneDomain', },
+    { key = 't', mods = 'CMD', action = act.SpawnTab 'CurrentPaneDomain', },
     -- windows
-    { key = 't', mods = 'META',       action = act.SpawnTab 'CurrentPaneDomain', },
-    { key = 'w', mods = 'CMD',        action = act.CloseCurrentTab { confirm = false }, },
+    { key = 't', mods = 'META', action = act.SpawnTab 'CurrentPaneDomain', },
+    { key = 'w', mods = 'CMD', action = act.CloseCurrentTab { confirm = false }, },
 
     -- copy and paste
     -- mac
-    { key = 'c', mods = 'CMD',        action = act.CopyTo 'Clipboard', },
-    { key = 'v', mods = 'CMD',        action = act.PasteFrom 'Clipboard' },
+    { key = 'c', mods = 'CMD', action = act.CopyTo 'Clipboard', },
+    { key = 'v', mods = 'CMD', action = act.PasteFrom 'Clipboard' },
     -- windows
     { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo 'Clipboard', },
     { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
 
     -- search
-    { key = 'f', mods = 'META',       action = act.Search { Regex = '', }, },
+    { key = 'f', mods = 'META', action = act.Search { Regex = '', }, },
     -- copy mode
-    { key = 'v', mods = 'META',       action = act.ActivateCopyMode },
+    { key = 'v', mods = 'META', action = act.ActivateCopyMode },
     -- quick select mode
-    { key = 's', mods = 'META',       action = act.QuickSelect },
+    { key = 's', mods = 'META', action = act.QuickSelect },
 }
 
 for i = 1, 8 do
