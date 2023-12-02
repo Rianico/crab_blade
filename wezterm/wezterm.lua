@@ -49,9 +49,10 @@ config.window_background_gradient = {
     -- Accepts CSS style color specs, from named colors, through rgb
     -- strings and more
     colors = {
-        '#0f0c29',
-        '#302b63',
-        '#24243e',
+        '#244048',
+        '#44172f',
+        '#244048',
+        '#925761',
     },
 
     -- Instead of specifying `colors`, you can use one of a number of
@@ -67,7 +68,7 @@ config.window_background_gradient = {
     -- How the colors are blended in the gradient.
     -- "Rgb", "LinearRgb", "Hsv" and "Oklab" are supported.
     -- The default is "Rgb".
-    blend = 'Oklab',
+    blend = 'Rgb',
 
     -- To avoid vertical color banding for horizontal gradients, the
     -- gradient position is randomly shifted by up to the `noise` value
@@ -83,7 +84,7 @@ config.window_background_gradient = {
     -- segment_size configures how many segments are present.
     -- segment_smoothness is how hard the edge is; 0.0 is a hard edge,
     -- 1.0 is a soft edge.
-    segment_size = 6,
+    segment_size = 161,
     segment_smoothness = 1.0,
 }
 
