@@ -10,8 +10,10 @@ local os_name = string.lower(os.getenv("OS") or "")
 if string.find(os_name, "windows") ~= nil then
     config.webgpu_power_preference = 'HighPerformance'
     config.default_domain = 'WSL:Ubuntu-22.04'
+    config.font_size = 12.3
 elseif string.find(os_name, "mac") ~= nil then
     config.webgpu_power_preference = 'LowPower'
+    config.font_size = 22.0
 end
 
 -- apparance
@@ -22,14 +24,16 @@ wezterm.on('gui-startup', function(window)
     gui_window:perform_action(wezterm.action.ToggleFullScreen, pane)
 end)
 
-config.color_scheme = 'Hardcore'
+config.color_scheme = 'catppuccin-macchiato'
 
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
 -- font
-config.font = wezterm.font 'FiraCode Nerd Font'
-config.font_size = 22.0
+config.font = wezterm.font_with_fallback {
+    'JetBrainsMonoNL Nerd Font Mono',
+}
+config.text_background_opacity = 0.618
 
 -- cursor
 config.default_cursor_style = 'SteadyUnderline'
@@ -84,7 +88,7 @@ config.window_background_gradient = {
     -- segment_size configures how many segments are present.
     -- segment_smoothness is how hard the edge is; 0.0 is a hard edge,
     -- 1.0 is a soft edge.
-    segment_size = 161,
+    segment_size = 1618,
     segment_smoothness = 1.0,
 }
 
@@ -96,8 +100,8 @@ config.colors = {
 }
 
 config.inactive_pane_hsb = {
-    saturation = 0.8,
-    brightness = 0.15,
+    saturation = 0.618,
+    brightness = 0.382,
 }
 
 -- keybinding
@@ -129,7 +133,7 @@ config.keys = {
     { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
 
     -- search
-    { key = 'f', mods = 'META', action = act.Search { Regex = '', }, },
+    { key = 'f', mods = 'LEADER', action = act.Search { Regex = '', }, },
     -- copy mode
     { key = 'v', mods = 'META', action = act.ActivateCopyMode },
     -- quick select mode
