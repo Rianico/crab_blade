@@ -6,12 +6,13 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
+-- Windows
 local os_name = string.lower(os.getenv("OS") or "")
 if string.find(os_name, "windows") ~= nil then
     config.webgpu_power_preference = 'HighPerformance'
     config.default_domain = 'WSL:Ubuntu-22.04'
     config.font_size = 12.3
-elseif string.find(os_name, "mac") ~= nil then
+else
     config.webgpu_power_preference = 'LowPower'
     config.font_size = 22.0
 end
