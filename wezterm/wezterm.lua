@@ -53,6 +53,7 @@ config.window_background_gradient = {
     -- Accepts CSS style color specs, from named colors, through rgb
     -- strings and more
     colors = {
+        '#070d0f',
         '#244048',
         '#44172f',
         '#244048',
