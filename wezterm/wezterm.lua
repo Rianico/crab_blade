@@ -158,7 +158,7 @@ for i = 1, 8 do
 end
 
 config.quick_select_patterns = {
-	"[0-9a-zA-Z]{3,40}",
+	'(?:S+(?:s+S+)*)|(?:"[^"]+")',
 }
 
 return config
