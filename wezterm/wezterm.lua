@@ -37,6 +37,9 @@ config.text_background_opacity = 0.618
 -- cursor
 config.default_cursor_style = "SteadyUnderline"
 
+-- fps
+config.animation_fps = 120
+
 -- apparance
 config.window_background_opacity = 0.93
 
