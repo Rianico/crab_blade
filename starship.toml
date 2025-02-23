@@ -15,7 +15,7 @@ success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set
 error_symbol = '[➜](bold red)'     # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
 
 [time]
-disabled = false
+disabled = true
 format = '[\[ $time \]]($style) '
 time_format = '%d-%h %r'
 utc_time_offset = '+8'
