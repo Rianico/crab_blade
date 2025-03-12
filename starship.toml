@@ -5,14 +5,14 @@
 add_newline = true
 
 [directory]
+format = '[$path]($style)[$read_only]($read_only_style) '
 truncation_length = 3
 truncation_symbol = '…/'
-format = '[$path]($style)[$read_only]($read_only_style) '
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
-success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
-error_symbol = '[➜](bold red)'     # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = '[x](bold red)'     # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+success_symbol = '[>](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
 
 [time]
 disabled = true
@@ -21,11 +21,11 @@ time_format = '%d-%h %r'
 utc_time_offset = '+8'
 
 [status]
-style = 'bg:none'
-success_symbol = ''
+disabled = false
 format = '[\[$common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = false
-disabled = false
+style = 'bg:none'
+success_symbol = ''
 
 [jobs]
 number_threshold = 1
@@ -34,4 +34,25 @@ number_threshold = 1
 disabled = true
 
 [gcloud]
+disabled = true
+
+[git_branch]
+ignore_branches = ['master', 'main']
+symbol = '🌱 '
+truncation_length = 4
+truncation_symbol = ''
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = '🔖 '
+
+[git_state]
+cherry_pick = '[🍒 PICKING](bold red)'
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+
+[git_metrics]
+added_style = 'bold blue'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+
+[git_status]
 disabled = true
