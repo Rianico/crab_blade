@@ -17,8 +17,8 @@ end
 
 -- when start up, we maximize the window
 wezterm.on("gui-startup", function(_)
-  local _, pane, window = wezterm.mux.spawn_window({})
-  window:gui_window():perform_action(wezterm.action.ToggleFullScreen, pane)
+  -- local _, pane, window = wezterm.mux.spawn_window({})
+  -- window:gui_window():perform_action(wezterm.action.ToggleFullScreen, pane)
 end)
 
 -- config.color_scheme = "catppuccin-macchiato"
@@ -40,6 +40,7 @@ config.animation_fps = 120
 
 -- apparance
 config.window_background_opacity = 0.983
+config.macos_window_background_blur = 10
 
 config.colors = {
   tab_bar = {
