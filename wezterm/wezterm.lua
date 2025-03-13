@@ -24,6 +24,7 @@ end)
 -- config.color_scheme = "catppuccin-macchiato"
 config.color_scheme = "Catppuccin Macchiato (Gogh)"
 
+-- RESIZE, TITLE, NONE
 config.window_decorations = "RESIZE"
 
 config.hide_tab_bar_if_only_one_tab = true
@@ -45,7 +46,6 @@ config.macos_window_background_blur = 10
 config.window_padding = {
   left = 16,
   right = 0,
-  top = 0,
   bottom = 0,
 }
 
