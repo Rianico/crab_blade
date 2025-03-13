@@ -42,6 +42,13 @@ config.animation_fps = 120
 config.window_background_opacity = 0.983
 config.macos_window_background_blur = 10
 
+config.window_padding = {
+  left = 16,
+  right = 0,
+  top = 0,
+  bottom = 0,
+}
+
 config.colors = {
   tab_bar = {
     -- The color of the inactive tab bar edge/divider
